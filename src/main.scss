@@ -1,9 +1,53 @@
+@import 'reset.scss';
+
 html,body{
-	width:100vw;
+	width:100%;
 	heiht:100vh;
 	background:black;
 	font-family: Arial, sans-serif;
 	color:#777;
-	margin-top:30px;
+	font-size:16px;
 }
 
+.adventure-app{
+	background: #333;
+	height:100vh;
+	width:100%;
+	background:url('/build/image/start.jpg') center no-repeat;
+	background-size:cover;
+	display:flex;
+	flex-flow:row nowrap;
+	color:#fff;
+
+	.sidebar{
+	background:url('/build/image/campfire.jpg') center no-repeat;
+	background-size:cover;
+	flex:1 0 10%;
+
+		h1{
+			font-size:3rem;
+			transform:rotate(270deg);
+			white-space:nowrap;
+			width:150px;
+			position:relative;
+			top:150px;
+		}
+	}
+
+	.content{
+	flex:1 0 89%;
+	align-self:center;
+	}
+}
+
+
+.begin-story{
+	background:url('/build/image/travel.jpg') center no-repeat;
+	background-size:cover;
+	height:100vh;
+	width:100%;
+
+	display:flex;
+	flex-flow:column nowrap;
+	justify-content:center;	
+}

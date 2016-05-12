@@ -69,146 +69,57 @@
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
 	
-		// Defining the state in the constructor
-	
-		function App(props) {
+		function App() {
 			_classCallCheck(this, App);
 	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
-			_this.state = {
-				todoList: [{ title: "Todo-List", completed: false }, { title: "FML", completed: false }]
-			};
+			_this.state = { show: true };
 			return _this;
 		}
 	
-		// Checks if the list item is checked
+		// Setting the state to false
 	
 	
 		_createClass(App, [{
-			key: '_toggleComplete',
-			value: function _toggleComplete(theTodoToModify) {
-	
-				// Updates the Completed if its checkbox is checked
-				var todoList = this.state.todoList.map(function (todo) {
-					if (theTodoToModify === todo) {
-						todo.completed = !todo.completed;
-					}
-					return todo;
-				});
-	
-				this.setState({ todoList: todoList });
-			}
-	
-			// Adds the input to the array
-	
-		}, {
-			key: '_addTodo',
-			value: function _addTodo(e) {
+			key: '_startAdventure',
+			value: function _startAdventure(e) {
 				e.preventDefault();
-	
-				//grabs the value and adds it back to the list
-				if (this.refs.todoTitle.value) {
-					this.state.todoList.push({ title: this.refs.todoTitle.value, completed: false });
-					this.setState({ todoList: this.state.todoList }); // rewrites the state with the new list
-					this.refs.todoTitle.value = ''; // return empty string to the input field
-				}
+				this.setState({ show: false });
 			}
-	
-			// Removes the List
-	
-		}, {
-			key: '_removeTodo',
-			value: function _removeTodo(theTodoToModify) {
-	
-				// Filters out the list if value = true for completed
-				var todoList = this.state.todoList.filter(function (todo) {
-					if (theTodoToModify === todo) {
-						return false;
-					}
-					return todo;
-				});
-	
-				this.setState({ todoList: todoList });
-			}
-	
-			// Renders the Todo list, todo becomes the name and index tracks the list number
-	
-		}, {
-			key: '_renderTodos',
-			value: function _renderTodos(todo, index) {
-				return React.createElement(Todo, { key: index,
-					todo: todo,
-					removeTodo: this._removeTodo.bind(this),
-					toggleComplete: this._toggleComplete.bind(this) });
-			}
-	
-			// Clears the items that are checked
-	
-		}, {
-			key: '_clearCompleted',
-			value: function _clearCompleted() {
-				var todoList = this.state.todoList.filter(function (todo, index) {
-	
-					//Filter out the list if value = true for completed
-					if (todo.completed) {
-						return false;
-					}
-					return true;
-				});
-	
-				this.setState({ todoList: todoList });
-			}
-	
-			// Checks if any checkbox has been checked
-	
-		}, {
-			key: '_hasCompleted',
-			value: function _hasCompleted() {
-				var completed = this.state.todoList.filter(function (todo, index) {
-					if (todo.completed) {
-						return true;
-					}
-					return false;
-				});
-				return completed.length;
-			}
-	
-			// Renders Post replies section
-	
 		}, {
 			key: 'render',
 			value: function render() {
 				return React.createElement(
 					'div',
-					{ className: 'todo-app' },
-					React.createElement(
-						'h1',
-						null,
-						'FML List'
-					),
+					{ className: 'adventure-app' },
 					React.createElement(
 						'div',
-						{ className: 'add-todo' },
+						{ className: 'sidebar' },
 						React.createElement(
-							'form',
-							{ name: 'addTodo', onSubmit: this._addTodo.bind(this) },
-							React.createElement('input', { type: 'text', ref: 'todoTitle' })
+							'h1',
+							null,
+							'Adventure'
 						)
 					),
 					React.createElement(
-						'ul',
-						null,
-						this.state.todoList.map(this._renderTodos.bind(this))
-					),
-					this.state.todoList.length,
-					' ',
-					this.state.todoList.length <= 1 ? 'Todo' : 'Todos',
-					this._hasCompleted() ? React.createElement(
-						'button',
-						{ className: 'clearButton', onClick: this._clearCompleted.bind(this) },
-						'Clear Completed'
-					) : ''
+						'div',
+						{ className: 'content' },
+						this.state.show ? React.createElement(
+							'div',
+							{ className: 'accept-adventure' },
+							React.createElement(
+								'h1',
+								null,
+								'Your Adventure Begins Here'
+							),
+							React.createElement(
+								'button',
+								{ onClick: this._startAdventure.bind(this) },
+								'Adventure Awaits...'
+							)
+						) : React.createElement(Adventure, null)
+					)
 				);
 			}
 		}]);
@@ -216,51 +127,53 @@
 		return App;
 	}(React.Component);
 	
-	var Todo = function (_React$Component2) {
-		_inherits(Todo, _React$Component2);
+	var Adventure = function (_React$Component2) {
+		_inherits(Adventure, _React$Component2);
 	
-		function Todo() {
-			_classCallCheck(this, Todo);
+		function Adventure(props) {
+			_classCallCheck(this, Adventure);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Todo).apply(this, arguments));
+			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Adventure).call(this, props));
+	
+			_this2.state = {
+				// List of Adventures
+				adventure: [{ quest: "Question A", answer: "A", result: false }, { quest: "Question B", answer: "B", result: false }, { quest: "Question C", answer: "C", result: false }],
+				success: 0
+			};
+			return _this2;
 		}
 	
-		_createClass(Todo, [{
-			key: '_toggleComplete',
-	
-	
-			// Checks if the list item is checked
-			value: function _toggleComplete() {
-				this.props.toggleComplete(this.props.todo);
-			}
-	
-			// Removes the List
-	
-		}, {
-			key: '_removeTodo',
-			value: function _removeTodo() {
-				this.props.removeTodo(this.props.todo);
+		_createClass(Adventure, [{
+			key: '_submit',
+			value: function _submit(e) {
+				e.preventDefault();
+				console.log(this.refs.reply.value);
+				if (this.refs.reply.value === "A") {
+					this.setState({ result: true });
+					console.log(this.state.adventure[0].result);
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				return React.createElement(
-					'li',
-					null,
-					this.props.todo.title,
-					React.createElement('input', { type: 'checkbox',
-						defaultChecked: this.props.todo.completed,
-						onClick: this._toggleComplete.bind(this) }),
+					'div',
+					{ className: 'begin-story' },
 					React.createElement(
-						'button',
-						{ onClick: this._removeTodo.bind(this) },
-						'Delete'
+						'h3',
+						null,
+						this.state.adventure[0].quest
+					),
+					React.createElement(
+						'form',
+						{ onSubmit: this._submit.bind(this) },
+						React.createElement('input', { type: 'text', ref: 'reply' })
 					)
 				);
 			}
 		}]);
 	
-		return Todo;
+		return Adventure;
 	}(React.Component);
 	
 	ReactDOM.render(React.createElement(App, null), document.getElementById('react-app'));
@@ -380,6 +293,9 @@
 	var queueIndex = -1;
 	
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -20388,7 +20304,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html, body {\n  width: 100vw;\n  heiht: 100vh;\n  background: black;\n  font-family: Arial, sans-serif;\n  color: #777;\n  margin-top: 30px; }\n\nh1 {\n  margin: 0; }\n\nul {\n  margin: 0;\n  list-style: none;\n  padding: 0; }\n  ul li {\n    margin: 10px 0;\n    display: flex;\n    flex-flow: row nowrap;\n    justify-content: space-between; }\n\n.todo-app {\n  width: 250px;\n  padding: 20px;\n  margin: 0 auto;\n  border: 1px solid #fff;\n  border-radius: 5px; }\n\ninput {\n  color: #000; }\n\n.clearButton {\n  float: right; }\n\nbutton {\n  float: right; }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml, body {\n  width: 100vw;\n  heiht: 100vh;\n  background: black;\n  font-family: Arial, sans-serif;\n  color: #777;\n  font-size: 16px; }\n\n.adventure-app {\n  background: #333;\n  height: 100vh;\n  width: 100%;\n  display: flex;\n  flex-flow: row nowrap; }\n  .adventure-app .sidebar {\n    background-image: url(\"/build/image/campire.jpg\") repeat;\n    flex: 1 0 10%; }\n    .adventure-app .sidebar h1 {\n      font-size: 5rem;\n      transform: rotate(270deg);\n      wrap: nowrap;\n      width: 150px;\n      position: relative;\n      top: 300px; }\n  .adventure-app .content {\n    flex: 1 0 90%;\n    align-self: center; }\n\n.begin-story {\n  background-color: #666; }\n", ""]);
 	
 	// exports
 

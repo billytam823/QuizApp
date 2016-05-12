@@ -1,7 +1,7 @@
 {
-  "name": "Todo List",
+  "name": "QuizApp",
   "version": "1.0.0",
-  "description": "Webpack demo",
+  "description": "QuizApp",
   "main": "index.js",
   "author": "Billy",
   "license": "ISC",
