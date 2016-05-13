@@ -15,6 +15,7 @@ class App extends React.Component{
 		this.setState({show:false})
 	}
 
+
 	// Display the initial page, switches to Adventure class on click
 	render(){
 		return(
@@ -43,35 +44,50 @@ class Timer extends React.Component{
 	}
 
 	//Start the countdown
-	_countDownStart(){
+	_countDown(){
 
 		//Toggle the state to true
 		this.setState({show:true})
 
-		let timer = setInterval(()=>{
+		this.timer = setInterval(()=>{
 			if(this.state.seconds > 0){ //stops decrementing when it is 0
 				this.setState({seconds:this.state.seconds -1})
 			}
 		},1000)
+
 	}
 
-	_formatTime(){
-		const minute = math.floor(this.state.seconds/60);
-		const seconds = math.floor(this.state.seconds%60);
+	//Tracks when the component gets updated
+	componentDidUpdate(prevProps, prevState) {
+	    
+	    //if time runs out, stop timer and reset timer
+	     if (this.state.seconds === 0){
+	     	clearInterval(this.timer);
+	     	this.setState({seconds:10 , show:false});
+	     }
 
-		const time = minute+':'+seconds;
-		return time
+
+	}
+
+	//Formats the time to look like a digital clock
+	_formatTime(){
+		let minute = Math.floor(this.state.seconds/60);
+		let seconds = Math.floor(this.state.seconds%60);
+
+		//adds a 0 if its a single digit second
+		if(seconds < 10){ seconds = '0' + seconds;}
+
+		let time = minute+':'+seconds;
+		return time;
 	}
 
 	render(){
 		return(
 			<div className="timer">
-
-				<span>{this_formatTime.bind(this)}</span>
 				{ !this.state.show ? 
 					<div>
-						<button onClick={this._countDownStart.bind(this)}>Begin Your Adventure</button>
-					</div> : <Adventure />}
+						<button onClick={this._countDown.bind(this)}>Time is Running Out!</button>
+					</div> : <div><span>{this._formatTime()}</span><Adventure /></div>}
 			</div>
 		)
 	}
@@ -85,9 +101,9 @@ class Adventure extends React.Component{
 		this.state= {
 			// List of Adventures
 			adventure:[
-				{quest:"Question A", answer:"A" ,result: false},
-				{quest:"Question B", answer:"B" ,result: false},
-				{quest:"Question C", answer:"C" ,result: false},
+				{quest:"Question A", answer:"a" ,result: false},
+				{quest:"Question B", answer:"a" ,result: false},
+				{quest:"Question C", answer:"a" ,result: false},
 			],
 			questionNum:0
 		};
@@ -107,26 +123,72 @@ class Adventure extends React.Component{
 				if(this.state.adventure[this.state.questionNum] === adventure){
 					adventure.result = true;
 				}
-				//return the new object that is updated
 				return adventure;
 			});
-
 			//replaces the old array with the new array
 			this.setState({adventure : newAdventure});	
 	 	}
-
 	 	//Assign state to the next question
 	 	this.setState({questionNum : this.state.questionNum+1});
+	 	this.refs.reply.value = '';	 // return empty string to the input field
+	}
+
+	// Calculates the Outcome
+	_outcome(){
+		let success = 0;
+		console.log(this.state.adventure);
+		const endingResult = this.state.adventure.map((adventure)=>{
+			if(adventure.result === true){
+				success = success + 1;
+			}
+		});
+
+		if (success > this.state.adventure.length/2 ){
+			console.log('success');
+		}else{
+			console.log('fail'); 
+		}
+	}
+
+	// Resets the questions
+	componentDidUpdate(prevProps, prevState) {
+		if(this.state.questionNum === 3){
+			this._outcome();
+			this.setState({questionNum:0})
+		}
 	}
 
 	//Displays the Questions and User Input fields
 	render(){
 		return(
 			<div className="begin-story">
-				<h3>{this.state.adventure[this.state.questionNum].quest}</h3>
-				<form onSubmit={this._submit.bind(this)}>
-					<input type="text" ref="reply"/>
-				</form>
+				{ this.state.questionNum < 3 ?
+				<div className="question">
+					<h3>{this.state.adventure[this.state.questionNum].quest}</h3>
+					<form onSubmit={this._submit.bind(this)}>
+						<input type="text" ref="reply"/>
+					</form>
+				</div> : '' }
+			</div>
+		)
+	}
+}
+
+class Success extends React.Component{
+	render(){
+		return(
+			<div className="success-page">
+				<h1>You Made It!!</h1>
+			</div>
+		)
+	}
+}
+
+class fail extends React.Component{
+	render(){
+		return(
+			<div className="fail-page">
+				<h1>You Died!!</h1>
 			</div>
 		)
 	}

@@ -159,6 +159,15 @@
 				}, 1000);
 			}
 		}, {
+			key: '_formatTime',
+			value: function _formatTime() {
+				var minute = math.floor(this.state.seconds / 60);
+				var seconds = math.floor(this.state.seconds % 60);
+	
+				var time = minute + ':' + seconds;
+				return time;
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return React.createElement(
@@ -167,8 +176,7 @@
 					React.createElement(
 						'span',
 						null,
-						'0:',
-						this.state.seconds
+						this_formatTime.bind(this)
 					),
 					!this.state.show ? React.createElement(
 						'div',
@@ -212,17 +220,26 @@
 	
 				e.preventDefault();
 	
+				//Compares the input answer with array's "answer"
 				if (this.refs.reply.value === this.state.adventure[this.state.questionNum].answer) {
 	
-					// Assign newAdventure as the array
-					var _newAdventure = this.state.adventure.map(function (adventure) {
+					// Assign newAdventure as the array to be modified
+					var newAdventure = this.state.adventure.map(function (adventure) {
+	
+						// if the current object matches the object in the list, then return true
 						if (_this5.state.adventure[_this5.state.questionNum] === adventure) {
 							adventure.result = true;
 						}
+						//return the new object that is updated
 						return adventure;
 					});
+	
+					//replaces the old array with the new array
+					this.setState({ adventure: newAdventure });
 				}
-				this.setState({ adventure: newAdventure });
+	
+				//Assign state to the next question
+				this.setState({ questionNum: this.state.questionNum + 1 });
 			}
 	
 			//Displays the Questions and User Input fields

@@ -37,25 +37,35 @@ html,body{
 	.content{
 	flex:1 0 89%;
 	align-self:center;
-	}
-}
-
-
-.begin-story{
-	// background:url('/build/image/travel.jpg') center no-repeat;
-	background-size:cover;
-	flex: 1 0 89%;
-
 	display:flex;
-	flex-flow:column nowrap;
-	justify-content:center;	
+	flex-flow:row nowrap;
+	justify-content:center;
+	}
 }
 
 .timer{
 	flex:1 0 89%;
+	display:flex;
+	flex-flow:ro nowrap;
+	justify-content:center;
+
 	span{
 		position:absolute;
 		top:15px;
 		right:80px;
 	}
+}
+
+.begin-story{
+	// background:url('/build/image/travel.jpg') center no-repeat;
+	background-size:cover;
+	flex: 1 0 89%;
+	display:flex;
+	flex-flow:row nowrap;
+	justify-content:center;
+
+	.question{
+		padding:25px;
+		background-color:#444;
+	}	
 }
