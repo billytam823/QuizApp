@@ -21,10 +21,14 @@ class App extends React.Component{
 		switch(this.state.page){
 			case 'start':
 				return(<Start setpage={this._setPage.bind(this)}  />)
-			case 'timer':
-				return(<Timer />)
-			case 'adventure':
-				return(<Adventure setpage={this.setPage.bind(this)} />)
+			case 'ready':
+				return(<Ready setpage={this._setPage.bind(this)} />)
+			case 'begin':
+				return(<Begin setpage={this._setPage.bind(this)} />)
+			case 'success':
+				return(<Success setpage={this._setPage.bind(this)} />)
+			case 'fail':
+				return(<Fail setpage={this._setPage.bind(this)} />)
 		}
 	}
 
@@ -46,13 +50,13 @@ class App extends React.Component{
 class Start extends React.Component{
 
 	//brings the page to the Timer page
-	_timerPage(){
-		this.props.setpage('timer');
+	_nextPage(){
+		this.props.setpage('ready');
 	}
 
 	render(){
 		return(
-			<button onClick={this._timerPage.bind(this)}>Adventre Awaits...</button>
+			<button onClick={this._nextPage.bind(this)}>Adventre Awaits...</button>
 		)
 	}
 }
@@ -62,29 +66,28 @@ class Timer extends React.Component{
 	constructor(){
 		super();
 		this.state= {
-			seconds:10, 
-			show:false
+			seconds:5, 
 		}
 	}
 
-	//brings the page to Adventure page
-	_adventurePage(){
-		this.props.setpage('adventure');
+	//brings the page to the Fail page
+	_nextPage(){
+		this.props.setpage('fail')
 	}
 
 
 	//Start the countdown
-	_countDown(){
+	componentDidMount(){
 
-		//Toggle the state to true
-		this.setState({show:true})
+		//Set timer seconds on mount
+		this.setState({seconds:5})
 
+		//Start clock tick
 		this.timer = setInterval(()=>{
 			if(this.state.seconds > 0){ //stops decrementing when it is 0
 				this.setState({seconds:this.state.seconds -1})
 			}
 		},1000)
-
 	}
 
 	//Tracks when the component gets updated
@@ -93,9 +96,8 @@ class Timer extends React.Component{
 	    //if time runs out, stop timer and reset timer
 	     if (this.state.seconds === 0){
 	     	clearInterval(this.timer);
-	     	this.setState({seconds:10 , show:false});
+	     	this._nextPage();
 	     }
-
 
 	}
 
@@ -116,15 +118,32 @@ class Timer extends React.Component{
 			<div className="timer">
 					<div>
 						<span>{this._formatTime()}</span>
-						<button onClick={this._adventurePage.bind(this)}>Time is Running Out!</button>
 					</div>
 			</div>
 		)
 	}
 }
 
+//Constains the Ready Button
+class Ready extends React.Component{
+	
+	//brings the page to Adventure page
+		_nextPage(){
+			this.props.setpage('begin');
+		}
+
+	render(){
+		return(
+				<div>
+					<button onClick={this._nextPage.bind(this)}>Are you Ready?</button>
+				</div>
+		)
+	}
+
+}
+
 //Contains the Adventure Questions
-class Adventure extends React.Component{
+class Begin extends React.Component{
 	constructor(){
 		super();
 		this.state= {
@@ -136,6 +155,16 @@ class Adventure extends React.Component{
 			],
 			questionNum:0
 		};
+	}
+
+	//Change page to Success Page
+	_nextSuccess(){
+		this.props.setpage('success');
+	}
+
+	//Change page to Fail Page
+	_nextFail(){
+		this.props.setpage('fail');
 	}
 
 	//Compares the answer to the quest, if same returns true
@@ -173,9 +202,9 @@ class Adventure extends React.Component{
 		});
 
 		if (success > this.state.adventure.length/2 ){
-			console.log('success');
+			this._nextSuccess();
 		}else{
-			console.log('fail'); 
+			this._nextFail(); 
 		}
 	}
 
@@ -193,6 +222,7 @@ class Adventure extends React.Component{
 			<div className="begin-story">
 				{ this.state.questionNum < 3 ?
 				<div className="question">
+					<Timer />
 					<h3>{this.state.adventure[this.state.questionNum].quest}</h3>
 					<form onSubmit={this._submit.bind(this)}>
 						<input type="text" ref="reply"/>
@@ -213,7 +243,7 @@ class Success extends React.Component{
 	}
 }
 
-class fail extends React.Component{
+class Fail extends React.Component{
 	render(){
 		return(
 			<div className="fail-page">
