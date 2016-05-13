@@ -6,17 +6,28 @@ require('../src/main.scss');
 class App extends React.Component{	
 	constructor(){
 		super();
-		this.state={show:true}
+		this.state={
+			page: 'start'
+		}
 	}
 
-	// Setting the state to false
-	_startAdventure(e){
-		e.preventDefault();
-		this.setState({show:false})
+	// Switches the state base on which page
+	_setPage(page){
+		this.setState({page})
 	}
 
+	// Switch content base on where we are
+	_renderPage(){
+		switch(this.state.page){
+			case 'start':
+				return(<Start setpage={this._setPage.bind(this)}  />)
+			case 'timer':
+				return(<Timer />)
+			case 'adventure':
+				return(<Adventure setpage={this.setPage.bind(this)} />)
+		}
+	}
 
-	// Display the initial page, switches to Adventure class on click
 	render(){
 		return(
 			<div className="adventure-app">
@@ -24,16 +35,29 @@ class App extends React.Component{
 					<h1>Adventure</h1>
 				</div>
 				<div className="content">
-					{/* When button is click, switch to adventure class */}
-					{this.state.show ? <div className="accept-adventure">
-						<button onClick={this._startAdventure.bind(this)}>Adventure Awaits...</button>
-					</div> : <Timer />}
+					{this._renderPage()}
 				</div>
 			</div>
 		)
 	}
 }
 
+// Starting state with the button
+class Start extends React.Component{
+
+	//brings the page to the Timer page
+	_timerPage(){
+		this.props.setpage('timer');
+	}
+
+	render(){
+		return(
+			<button onClick={this._timerPage.bind(this)}>Adventre Awaits...</button>
+		)
+	}
+}
+
+// Contains the button to start the timer
 class Timer extends React.Component{
 	constructor(){
 		super();
@@ -42,6 +66,12 @@ class Timer extends React.Component{
 			show:false
 		}
 	}
+
+	//brings the page to Adventure page
+	_adventurePage(){
+		this.props.setpage('adventure');
+	}
+
 
 	//Start the countdown
 	_countDown(){
@@ -84,17 +114,16 @@ class Timer extends React.Component{
 	render(){
 		return(
 			<div className="timer">
-				{ !this.state.show ? 
 					<div>
-						<button onClick={this._countDown.bind(this)}>Time is Running Out!</button>
-					</div> : <div><span>{this._formatTime()}</span><Adventure /></div>}
+						<span>{this._formatTime()}</span>
+						<button onClick={this._adventurePage.bind(this)}>Time is Running Out!</button>
+					</div>
 			</div>
 		)
 	}
 }
 
-
-
+//Contains the Adventure Questions
 class Adventure extends React.Component{
 	constructor(){
 		super();
