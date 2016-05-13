@@ -87,6 +87,9 @@
 				e.preventDefault();
 				this.setState({ show: false });
 			}
+	
+			// Display the initial page, switches to Adventure class on click
+	
 		}, {
 			key: 'render',
 			value: function render() {
@@ -109,16 +112,11 @@
 							'div',
 							{ className: 'accept-adventure' },
 							React.createElement(
-								'h1',
-								null,
-								'Your Adventure Begins Here'
-							),
-							React.createElement(
 								'button',
 								{ onClick: this._startAdventure.bind(this) },
 								'Adventure Awaits...'
 							)
-						) : React.createElement(Adventure, null)
+						) : React.createElement(Timer, null)
 					)
 				);
 			}
@@ -127,32 +125,108 @@
 		return App;
 	}(React.Component);
 	
-	var Adventure = function (_React$Component2) {
-		_inherits(Adventure, _React$Component2);
+	var Timer = function (_React$Component2) {
+		_inherits(Timer, _React$Component2);
 	
-		function Adventure(props) {
-			_classCallCheck(this, Adventure);
+		function Timer() {
+			_classCallCheck(this, Timer);
 	
-			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Adventure).call(this, props));
+			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Timer).call(this));
 	
 			_this2.state = {
-				// List of Adventures
-				adventure: [{ quest: "Question A", answer: "A", result: false }, { quest: "Question B", answer: "B", result: false }, { quest: "Question C", answer: "C", result: false }],
-				success: 0
+				seconds: 10,
+				show: false
 			};
 			return _this2;
 		}
 	
+		//Start the countdown
+	
+	
+		_createClass(Timer, [{
+			key: '_countDownStart',
+			value: function _countDownStart() {
+				var _this3 = this;
+	
+				//Toggle the state to true
+				this.setState({ show: true });
+	
+				var timer = setInterval(function () {
+					if (_this3.state.seconds > 0) {
+						//stops decrementing when it is 0
+						_this3.setState({ seconds: _this3.state.seconds - 1 });
+					}
+				}, 1000);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					{ className: 'timer' },
+					React.createElement(
+						'span',
+						null,
+						'0:',
+						this.state.seconds
+					),
+					!this.state.show ? React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'button',
+							{ onClick: this._countDownStart.bind(this) },
+							'Begin Your Adventure'
+						)
+					) : React.createElement(Adventure, null)
+				);
+			}
+		}]);
+	
+		return Timer;
+	}(React.Component);
+	
+	var Adventure = function (_React$Component3) {
+		_inherits(Adventure, _React$Component3);
+	
+		function Adventure() {
+			_classCallCheck(this, Adventure);
+	
+			var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Adventure).call(this));
+	
+			_this4.state = {
+				// List of Adventures
+				adventure: [{ quest: "Question A", answer: "A", result: false }, { quest: "Question B", answer: "B", result: false }, { quest: "Question C", answer: "C", result: false }],
+				questionNum: 0
+			};
+			return _this4;
+		}
+	
+		//Compares the answer to the quest, if same returns true
+	
+	
 		_createClass(Adventure, [{
 			key: '_submit',
 			value: function _submit(e) {
+				var _this5 = this;
+	
 				e.preventDefault();
-				console.log(this.refs.reply.value);
-				if (this.refs.reply.value === "A") {
-					this.setState({ result: true });
-					console.log(this.state.adventure[0].result);
+	
+				if (this.refs.reply.value === this.state.adventure[this.state.questionNum].answer) {
+	
+					// Assign newAdventure as the array
+					var _newAdventure = this.state.adventure.map(function (adventure) {
+						if (_this5.state.adventure[_this5.state.questionNum] === adventure) {
+							adventure.result = true;
+						}
+						return adventure;
+					});
 				}
+				this.setState({ adventure: newAdventure });
 			}
+	
+			//Displays the Questions and User Input fields
+	
 		}, {
 			key: 'render',
 			value: function render() {
@@ -162,7 +236,7 @@
 					React.createElement(
 						'h3',
 						null,
-						this.state.adventure[0].quest
+						this.state.adventure[this.state.questionNum].quest
 					),
 					React.createElement(
 						'form',
@@ -20304,7 +20378,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml, body {\n  width: 100vw;\n  heiht: 100vh;\n  background: black;\n  font-family: Arial, sans-serif;\n  color: #777;\n  font-size: 16px; }\n\n.adventure-app {\n  background: #333;\n  height: 100vh;\n  width: 100%;\n  display: flex;\n  flex-flow: row nowrap; }\n  .adventure-app .sidebar {\n    background-image: url(\"/build/image/campire.jpg\") repeat;\n    flex: 1 0 10%; }\n    .adventure-app .sidebar h1 {\n      font-size: 5rem;\n      transform: rotate(270deg);\n      wrap: nowrap;\n      width: 150px;\n      position: relative;\n      top: 300px; }\n  .adventure-app .content {\n    flex: 1 0 90%;\n    align-self: center; }\n\n.begin-story {\n  background-color: #666; }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml, body {\n  width: 100%;\n  heiht: 100vh;\n  background: black;\n  font-family: Arial, sans-serif;\n  color: #777;\n  font-size: 16px; }\n\n.adventure-app {\n  background: #333;\n  height: 100vh;\n  width: 100%;\n  background: url(\"/build/image/start.jpg\") center no-repeat;\n  background-size: cover;\n  display: flex;\n  flex-flow: row nowrap;\n  color: #fff; }\n  .adventure-app .sidebar {\n    background: url(\"/build/image/campfire.jpg\") center no-repeat;\n    background-size: cover;\n    flex: 1 0 10%; }\n    .adventure-app .sidebar h1 {\n      font-size: 3rem;\n      transform: rotate(270deg);\n      white-space: nowrap;\n      width: 150px;\n      position: relative;\n      top: 150px; }\n  .adventure-app .content {\n    flex: 1 0 89%;\n    align-self: center; }\n\n.begin-story {\n  background-size: cover;\n  flex: 1 0 89%;\n  display: flex;\n  flex-flow: column nowrap;\n  justify-content: center; }\n\n.timer {\n  flex: 1 0 89%; }\n  .timer span {\n    position: absolute;\n    top: 15px;\n    right: 80px; }\n", ""]);
 	
 	// exports
 

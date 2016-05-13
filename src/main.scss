@@ -42,12 +42,20 @@ html,body{
 
 
 .begin-story{
-	background:url('/build/image/travel.jpg') center no-repeat;
+	// background:url('/build/image/travel.jpg') center no-repeat;
 	background-size:cover;
-	height:100vh;
-	width:100%;
+	flex: 1 0 89%;
 
 	display:flex;
 	flex-flow:column nowrap;
 	justify-content:center;	
+}
+
+.timer{
+	flex:1 0 89%;
+	span{
+		position:absolute;
+		top:15px;
+		right:80px;
+	}
 }
