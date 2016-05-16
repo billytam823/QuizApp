@@ -3,11 +3,11 @@
 
 //fade in effectx
 @mixin fade-in(){
-	-webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 2s; /* Firefox < 16 */
-        -ms-animation: fadein 2s; /* Internet Explorer */
-         -o-animation: fadein 2s; /* Opera < 12.1 */
-            animation: fadein 2s;
+	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 1s; /* Firefox < 16 */
+        -ms-animation: fadein 1s; /* Internet Explorer */
+         -o-animation: fadein 1s; /* Opera < 12.1 */
+            animation: fadein 1s;
 
 	@keyframes fadein {
 	    from { opacity: 0; }
@@ -63,6 +63,10 @@ button{
 	background:
 	url('/build/image/parchment-bg.jpg') no-repeat,
 	url('/build/image/travel.jpg') center no-repeat,
+	url('/build/image/travel2.jpg') center no-repeat,
+	url('/build/image/begin.jpg') center no-repeat,
+	url('/build/image/fail.jpg') center no-repeat,
+	url('/build/image/success.jpg') center no-repeat,
 	url('/build/image/dragon.jpg') no-repeat;
 }
 
@@ -88,6 +92,14 @@ button{
 			width:150px;
 			position:relative;
 			top:150px;
+			letter-spacing:3px;
+			
+			animation: spacein 2s;
+
+			@keyframes spacein {
+			    from { letter-spacing: 80px; }
+			    to   { letter-spacing: 3px; }
+			}
 		}
 	}
 
@@ -97,6 +109,7 @@ button{
 	display:flex;
 	flex-flow:row nowrap;
 	justify-content:center;
+	@include fade-in;
 	}
 }
 
@@ -154,15 +167,14 @@ button{
 	justify-content:center;
 	@include fade-in;
 
-
 	.question{
 		padding:25px;
 		height:300px;
 		width:300px;
 		background:
 			linear-gradient( 
-				rgba(0,0,0,0.5),
-				rgba(0,0,0,0.5)
+				rgba(0,0,0,0.3),
+				rgba(0,0,0,0.3)
 			),
 			url('/build/image/parchment-bg.jpg') no-repeat;
 		background-size:100% 100%;
@@ -187,8 +199,92 @@ button{
 	}	
 }
 
+.question-bg{
+	padding:25px 0;
+	width:100%;
+	display:flex;
+	justify-content:center;
+	box-shadow:0px 0px 8px #000;
+}
+
+#bg1{
+	background:
+	linear-gradient( 
+				rgba(0,0,0,0.5),
+				rgba(0,0,0,0.5)
+			),
+	url('/build/image/begin.jpg') no-repeat center;
+	background-size:cover;
+	@include fade-in;
+}
+
+#bg2{
+	background:
+	linear-gradient( 
+				rgba(0,0,0,0.3),
+				rgba(0,0,0,0.3)
+			),
+	url('/build/image/travel2.jpg') no-repeat center;
+	background-size:cover;
+	@include fade-in;
+}
+
+#bg3{
+	background:
+	linear-gradient( 
+				rgba(0,0,0,0.3),
+				rgba(0,0,0,0.3)
+			),
+	url('/build/image/travel.jpg') no-repeat center;
+	background-size:cover;
+	@include fade-in;
+}
+
+#bg4{
+	background:
+	linear-gradient( 
+				rgba(0,0,0,0.3),
+				rgba(0,0,0,0.3)
+			),
+	url('/build/image/dragon.jpg') no-repeat center;
+	background-size:cover;
+	@include fade-in;
+}
+
 .fail-page{
 
+	display:flex;
+	flex-flow:row nowrap;
+	justify-content:center;
+	width:100%;
+	height:100vh;
+	text-align:center;
+	@include fade-in;
+
+	background:
+		linear-gradient( 
+					rgba(0,0,0,0.5),
+					rgba(0,0,0,0.5)
+				),
+		url('/build/image/fail.jpg') no-repeat;
+	background-size:cover;
+	
+		div{
+			display:flex;
+			flex-flow:column nowrap;
+			justify-content:center;
+		}
+
+		h1{ 
+			font-size:3em;
+			margin-bottom:10px;
+		}
+
+		p{font-size:1.3em;}
+}
+
+.success-page{
+	
 	display:flex;
 	flex-flow:column nowrap;
 	justify-content:center;
@@ -201,11 +297,12 @@ button{
 					rgba(0,0,0,0.5),
 					rgba(0,0,0,0.5)
 				),
-		url('/build/image/dragon.jpg') no-repeat;
+		url('/build/image/success.jpg') no-repeat;
 	background-size:cover;
 
 		h1{
 			font-size:3em;
 			align-self:center;
 		}
+
 }
