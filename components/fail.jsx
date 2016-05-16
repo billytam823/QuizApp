@@ -16,7 +16,7 @@ export default class Fail extends React.Component{
 
 
 			//if timer hits 5, run nextPage
-			if(time === 7){
+			if(time === 6){
 				this._nextPage();
 			}
 		},1000)

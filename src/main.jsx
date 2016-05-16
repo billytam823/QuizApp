@@ -44,6 +44,7 @@ class App extends React.Component{
 			<div className="adventure-app">
 				<div className="sidebar">
 					<h1>Adventure</h1>
+					<i className="ra ra-compass" aria-hidden="true"></i>
 				</div>
 				<div className="content">
 					{this._renderPage()}

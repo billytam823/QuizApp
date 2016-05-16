@@ -11,7 +11,7 @@ export default class Begin extends React.Component{
 				{quest:"You have been summoned by the King, Will you Comply?", bg:"bg1", answer:"yes" ,result: false},
 				{quest:"The King asks you to slay the Dragon, Will you Accept?", bg:"bg2",answer:"yes" ,result: false},
 				{quest:"You Arrived at the Dragon's den, Will you Proceed?", bg:"bg3",answer:"yes" ,result: false},
-				{quest:"As the fight continues, The Dragon decides to negociates half his wealth if you spare him, Will you Agree?",bg:"bg4", answer:"no" ,result: false}
+				{quest:"As the fight continues, The Dragon decides to negociates half his wealth if you spare him, Will you Agree?",bg:"bg4", answer:"yes" ,result: false}
 			],
 			questionNum:0
 		};
@@ -60,7 +60,7 @@ export default class Begin extends React.Component{
 			}
 		});
 
-		if (success > this.state.adventure.length/2 ){
+		if (success === this.state.adventure.length ){
 			this._nextSuccess();
 		}else{
 			this._nextFail(); 

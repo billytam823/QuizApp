@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/build/";
+/******/ 	__webpack_require__.p = "build/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -56,6 +56,28 @@
 	
 	var ReactDOM = _interopRequireWildcard(_reactDom);
 	
+	var _start = __webpack_require__(168);
+	
+	var _start2 = _interopRequireDefault(_start);
+	
+	var _ready = __webpack_require__(169);
+	
+	var _ready2 = _interopRequireDefault(_ready);
+	
+	var _begin = __webpack_require__(170);
+	
+	var _begin2 = _interopRequireDefault(_begin);
+	
+	var _success = __webpack_require__(172);
+	
+	var _success2 = _interopRequireDefault(_success);
+	
+	var _fail = __webpack_require__(173);
+	
+	var _fail2 = _interopRequireDefault(_fail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64,7 +86,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	__webpack_require__(168);
+	//importing components
+	
+	
+	__webpack_require__(174);
 	
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -74,22 +99,39 @@
 	
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
-			_this.state = { show: true };
+			_this.state = {
+				page: 'start'
+			};
 			return _this;
 		}
 	
-		// Setting the state to false
+		// Switches the state base on which page
 	
 	
 		_createClass(App, [{
-			key: '_startAdventure',
-			value: function _startAdventure(e) {
-				e.preventDefault();
-				this.setState({ show: false });
+			key: '_setPage',
+			value: function _setPage(page) {
+				this.setState({ page: page });
 			}
 	
-			// Display the initial page, switches to Adventure class on click
+			// Switch content base on where we are
 	
+		}, {
+			key: '_renderPage',
+			value: function _renderPage() {
+				switch (this.state.page) {
+					case 'start':
+						return React.createElement(_start2.default, { setpage: this._setPage.bind(this) });
+					case 'ready':
+						return React.createElement(_ready2.default, { setpage: this._setPage.bind(this) });
+					case 'begin':
+						return React.createElement(_begin2.default, { setpage: this._setPage.bind(this) });
+					case 'success':
+						return React.createElement(_success2.default, { setpage: this._setPage.bind(this) });
+					case 'fail':
+						return React.createElement(_fail2.default, { setpage: this._setPage.bind(this) });
+				}
+			}
 		}, {
 			key: 'render',
 			value: function render() {
@@ -103,168 +145,19 @@
 							'h1',
 							null,
 							'Adventure'
-						)
+						),
+						React.createElement('i', { className: 'ra ra-compass', 'aria-hidden': 'true' })
 					),
 					React.createElement(
 						'div',
 						{ className: 'content' },
-						this.state.show ? React.createElement(
-							'div',
-							{ className: 'accept-adventure' },
-							React.createElement(
-								'button',
-								{ onClick: this._startAdventure.bind(this) },
-								'Adventure Awaits...'
-							)
-						) : React.createElement(Timer, null)
+						this._renderPage()
 					)
 				);
 			}
 		}]);
 	
 		return App;
-	}(React.Component);
-	
-	var Timer = function (_React$Component2) {
-		_inherits(Timer, _React$Component2);
-	
-		function Timer() {
-			_classCallCheck(this, Timer);
-	
-			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Timer).call(this));
-	
-			_this2.state = {
-				seconds: 10,
-				show: false
-			};
-			return _this2;
-		}
-	
-		//Start the countdown
-	
-	
-		_createClass(Timer, [{
-			key: '_countDownStart',
-			value: function _countDownStart() {
-				var _this3 = this;
-	
-				//Toggle the state to true
-				this.setState({ show: true });
-	
-				var timer = setInterval(function () {
-					if (_this3.state.seconds > 0) {
-						//stops decrementing when it is 0
-						_this3.setState({ seconds: _this3.state.seconds - 1 });
-					}
-				}, 1000);
-			}
-		}, {
-			key: '_formatTime',
-			value: function _formatTime() {
-				var minute = math.floor(this.state.seconds / 60);
-				var seconds = math.floor(this.state.seconds % 60);
-	
-				var time = minute + ':' + seconds;
-				return time;
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return React.createElement(
-					'div',
-					{ className: 'timer' },
-					React.createElement(
-						'span',
-						null,
-						this_formatTime.bind(this)
-					),
-					!this.state.show ? React.createElement(
-						'div',
-						null,
-						React.createElement(
-							'button',
-							{ onClick: this._countDownStart.bind(this) },
-							'Begin Your Adventure'
-						)
-					) : React.createElement(Adventure, null)
-				);
-			}
-		}]);
-	
-		return Timer;
-	}(React.Component);
-	
-	var Adventure = function (_React$Component3) {
-		_inherits(Adventure, _React$Component3);
-	
-		function Adventure() {
-			_classCallCheck(this, Adventure);
-	
-			var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Adventure).call(this));
-	
-			_this4.state = {
-				// List of Adventures
-				adventure: [{ quest: "Question A", answer: "A", result: false }, { quest: "Question B", answer: "B", result: false }, { quest: "Question C", answer: "C", result: false }],
-				questionNum: 0
-			};
-			return _this4;
-		}
-	
-		//Compares the answer to the quest, if same returns true
-	
-	
-		_createClass(Adventure, [{
-			key: '_submit',
-			value: function _submit(e) {
-				var _this5 = this;
-	
-				e.preventDefault();
-	
-				//Compares the input answer with array's "answer"
-				if (this.refs.reply.value === this.state.adventure[this.state.questionNum].answer) {
-	
-					// Assign newAdventure as the array to be modified
-					var newAdventure = this.state.adventure.map(function (adventure) {
-	
-						// if the current object matches the object in the list, then return true
-						if (_this5.state.adventure[_this5.state.questionNum] === adventure) {
-							adventure.result = true;
-						}
-						//return the new object that is updated
-						return adventure;
-					});
-	
-					//replaces the old array with the new array
-					this.setState({ adventure: newAdventure });
-				}
-	
-				//Assign state to the next question
-				this.setState({ questionNum: this.state.questionNum + 1 });
-			}
-	
-			//Displays the Questions and User Input fields
-	
-		}, {
-			key: 'render',
-			value: function render() {
-				return React.createElement(
-					'div',
-					{ className: 'begin-story' },
-					React.createElement(
-						'h3',
-						null,
-						this.state.adventure[this.state.questionNum].quest
-					),
-					React.createElement(
-						'form',
-						{ onSubmit: this._submit.bind(this) },
-						React.createElement('input', { type: 'text', ref: 'reply' })
-					)
-				);
-			}
-		}]);
-	
-		return Adventure;
 	}(React.Component);
 	
 	ReactDOM.render(React.createElement(App, null), document.getElementById('react-app'));
@@ -20364,13 +20257,581 @@
 /* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var React = _interopRequireWildcard(_react);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// Starting state with the button
+	
+	var Start = function (_React$Component) {
+		_inherits(Start, _React$Component);
+	
+		function Start() {
+			_classCallCheck(this, Start);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Start).apply(this, arguments));
+		}
+	
+		_createClass(Start, [{
+			key: '_nextPage',
+	
+	
+			//brings the page to the Timer page
+			value: function _nextPage() {
+				this.props.setpage('ready');
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					null,
+					React.createElement('div', { className: 'preload' }),
+					React.createElement(
+						'button',
+						{ onClick: this._nextPage.bind(this) },
+						'An Adventre Awaits...'
+					)
+				);
+			}
+		}]);
+	
+		return Start;
+	}(React.Component);
+	
+	exports.default = Start;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var React = _interopRequireWildcard(_react);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	//Constains the Ready Button
+	
+	var Ready = function (_React$Component) {
+		_inherits(Ready, _React$Component);
+	
+		function Ready() {
+			_classCallCheck(this, Ready);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Ready).apply(this, arguments));
+		}
+	
+		_createClass(Ready, [{
+			key: '_nextPage',
+	
+	
+			//brings the page to Adventure page
+			value: function _nextPage() {
+				this.props.setpage('begin');
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'button',
+						{ onClick: this._nextPage.bind(this) },
+						'You can only say "yes"'
+					)
+				);
+			}
+		}]);
+	
+		return Ready;
+	}(React.Component);
+	
+	exports.default = Ready;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var React = _interopRequireWildcard(_react);
+	
+	var _timer = __webpack_require__(171);
+	
+	var _timer2 = _interopRequireDefault(_timer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	//Contains the Adventure Questions
+	
+	var Begin = function (_React$Component) {
+		_inherits(Begin, _React$Component);
+	
+		function Begin() {
+			_classCallCheck(this, Begin);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Begin).call(this));
+	
+			_this.state = {
+				// List of Adventures
+				adventure: [{ quest: "You have been summoned by the King, Will you Comply?", bg: "bg1", answer: "yes", result: false }, { quest: "The King asks you to slay the Dragon, Will you Accept?", bg: "bg2", answer: "yes", result: false }, { quest: "You Arrived at the Dragon's den, Will you Proceed?", bg: "bg3", answer: "yes", result: false }, { quest: "As the fight continues, The Dragon decides to negociates half his wealth if you spare him, Will you Agree?", bg: "bg4", answer: "yes", result: false }],
+				questionNum: 0
+			};
+			return _this;
+		}
+	
+		//Change page to Success Page
+	
+	
+		_createClass(Begin, [{
+			key: '_nextSuccess',
+			value: function _nextSuccess() {
+				this.props.setpage('success');
+			}
+	
+			//Change page to Fail Page
+	
+		}, {
+			key: '_nextFail',
+			value: function _nextFail() {
+				this.props.setpage('fail');
+			}
+	
+			//Compares the answer to the quest, if same returns true
+	
+		}, {
+			key: '_submit',
+			value: function _submit(e) {
+				var _this2 = this;
+	
+				e.preventDefault();
+	
+				//Compares the input answer with array's "answer"
+				if (this.refs.reply.value === this.state.adventure[this.state.questionNum].answer) {
+	
+					// Assign newAdventure as the array to be modified
+					var newAdventure = this.state.adventure.map(function (adventure) {
+	
+						// if the current object matches the object in the list, then return true
+						if (_this2.state.adventure[_this2.state.questionNum] === adventure) {
+	
+							adventure.result = true;
+						}return adventure;
+					});
+					//replaces the old array with the new array
+					this.setState({ adventure: newAdventure });
+				}
+				//Assign state to the next question
+				this.setState({ questionNum: this.state.questionNum + 1 });
+				this.refs.reply.value = ''; // return empty string to the input field
+			}
+	
+			// Calculates the Outcome
+	
+		}, {
+			key: '_outcome',
+			value: function _outcome() {
+				var success = 0;
+				var endingResult = this.state.adventure.map(function (adventure) {
+					if (adventure.result === true) {
+						success = success + 1;
+					}
+				});
+	
+				if (success === this.state.adventure.length) {
+					this._nextSuccess();
+				} else {
+					this._nextFail();
+				}
+			}
+	
+			// Resets the questions
+	
+		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps, prevState) {
+				if (this.state.questionNum === this.state.adventure.length) {
+					this._outcome();
+					this.setState({ questionNum: 0 });
+				}
+			}
+	
+			// Focus input field on Mount
+	
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.refs.reply.focus();
+			}
+	
+			//Displays the Questions and User Input fields
+	
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					{ className: 'begin-story' },
+					this.state.questionNum < this.state.adventure.length ? React.createElement(
+						'div',
+						{ className: 'question-bg', id: this.state.adventure[this.state.questionNum].bg },
+						React.createElement(
+							'div',
+							{ className: 'question' },
+							React.createElement(_timer2.default, { setpage: this._nextFail.bind(this) }),
+							React.createElement(
+								'h3',
+								null,
+								this.state.adventure[this.state.questionNum].quest
+							),
+							React.createElement(
+								'form',
+								{ onSubmit: this._submit.bind(this) },
+								React.createElement('input', { type: 'text', ref: 'reply', autofocus: true })
+							)
+						)
+					) : ''
+				);
+			}
+		}]);
+	
+		return Begin;
+	}(React.Component);
+	
+	exports.default = Begin;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var React = _interopRequireWildcard(_react);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// Contains the button to start the timer
+	
+	var Timer = function (_React$Component) {
+		_inherits(Timer, _React$Component);
+	
+		function Timer() {
+			_classCallCheck(this, Timer);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Timer).call(this));
+	
+			_this.state = {
+				seconds: 60
+			};
+			return _this;
+		}
+	
+		//brings the page to the Fail page
+	
+	
+		_createClass(Timer, [{
+			key: '_nextPage',
+			value: function _nextPage() {
+				this.props.setpage('fail');
+			}
+	
+			//Start the countdown
+	
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+	
+				//Set timer seconds on mount
+				this.setState({ seconds: 60 });
+	
+				//Start clock tick
+				this.timer = setInterval(function () {
+					if (_this2.state.seconds > 0) {
+						//stops decrementing when it is 0
+						_this2.setState({ seconds: _this2.state.seconds - 1 });
+					}
+				}, 1000);
+			}
+	
+			//Tracks when the component gets updated
+	
+		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps, prevState) {
+	
+				//if time runs out, stop timer and reset timer
+				if (this.state.seconds === 0) {
+					clearInterval(this.timer);
+					this._nextPage();
+				}
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				clearInterval(this.timer);
+			}
+	
+			//Formats the time to look like a digital clock
+	
+		}, {
+			key: '_formatTime',
+			value: function _formatTime() {
+				var minute = Math.floor(this.state.seconds / 60);
+				var seconds = Math.floor(this.state.seconds % 60);
+	
+				//adds a 0 if its a single digit second
+				if (seconds < 10) {
+					seconds = '0' + seconds;
+				}
+	
+				var time = minute + ':' + seconds;
+				return time;
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					{ className: 'timer' },
+					React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'span',
+							null,
+							this._formatTime()
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Timer;
+	}(React.Component);
+	
+	exports.default = Timer;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var React = _interopRequireWildcard(_react);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Success = function (_React$Component) {
+		_inherits(Success, _React$Component);
+	
+		function Success() {
+			_classCallCheck(this, Success);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Success).apply(this, arguments));
+		}
+	
+		_createClass(Success, [{
+			key: "render",
+			value: function render() {
+				return React.createElement(
+					"div",
+					{ className: "success-page" },
+					React.createElement(
+						"h1",
+						null,
+						"Happily Ever After"
+					)
+				);
+			}
+		}]);
+	
+		return Success;
+	}(React.Component);
+	
+	exports.default = Success;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var React = _interopRequireWildcard(_react);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Fail = function (_React$Component) {
+		_inherits(Fail, _React$Component);
+	
+		function Fail() {
+			_classCallCheck(this, Fail);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Fail).apply(this, arguments));
+		}
+	
+		_createClass(Fail, [{
+			key: '_nextPage',
+	
+	
+			//Brings the page back to start
+			value: function _nextPage() {
+				this.props.setpage('start');
+			}
+	
+			//Starts timer on mount
+	
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+	
+				var time = 0;
+	
+				this.timer = setInterval(function () {
+					time++;
+	
+					//if timer hits 5, run nextPage
+					if (time === 6) {
+						_this2._nextPage();
+					}
+				}, 1000);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				clearInterval(this.timer);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					{ className: 'fail-page' },
+					React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'h1',
+							null,
+							'Your Fate Ends...'
+						),
+						React.createElement(
+							'p',
+							null,
+							'....A New Story Begins'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Fail;
+	}(React.Component);
+	
+	exports.default = Fail;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(169);
+	var content = __webpack_require__(175);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(171)(content, {});
+	var update = __webpack_require__(177)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20387,21 +20848,21 @@
 	}
 
 /***/ },
-/* 169 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(170)();
+	exports = module.exports = __webpack_require__(176)();
 	// imports
-	
+	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Niconne);", ""]);
 	
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml, body {\n  width: 100%;\n  heiht: 100vh;\n  background: black;\n  font-family: Arial, sans-serif;\n  color: #777;\n  font-size: 16px; }\n\n.adventure-app {\n  background: #333;\n  height: 100vh;\n  width: 100%;\n  background: url(\"/build/image/start.jpg\") center no-repeat;\n  background-size: cover;\n  display: flex;\n  flex-flow: row nowrap;\n  color: #fff; }\n  .adventure-app .sidebar {\n    background: url(\"/build/image/campfire.jpg\") center no-repeat;\n    background-size: cover;\n    flex: 1 0 10%; }\n    .adventure-app .sidebar h1 {\n      font-size: 3rem;\n      transform: rotate(270deg);\n      white-space: nowrap;\n      width: 150px;\n      position: relative;\n      top: 150px; }\n  .adventure-app .content {\n    flex: 1 0 89%;\n    align-self: center; }\n\n.begin-story {\n  background-size: cover;\n  flex: 1 0 89%;\n  display: flex;\n  flex-flow: column nowrap;\n  justify-content: center; }\n\n.timer {\n  flex: 1 0 89%; }\n  .timer span {\n    position: absolute;\n    top: 15px;\n    right: 80px; }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml, body {\n  width: 100%;\n  heiht: 100vh;\n  background: black;\n  font-family: 'Niconne',cursive;\n  color: #777;\n  font-size: 16px; }\n\nbutton {\n  background-color: #777;\n  border: none;\n  border-radius: 6px;\n  color: #fff;\n  padding: 10px 15px;\n  box-shadow: 3px 3px 3px #000;\n  background: rgba(60, 60, 60, 0.7); }\n  button:active {\n    box-shadow: 1px 1px 0px #000; }\n\n.preload {\n  background: url(\"/build/image/parchment-bg.jpg\") no-repeat, url(\"/build/image/travel.jpg\") center no-repeat, url(\"/build/image/travel2.jpg\") center no-repeat, url(\"/build/image/begin.jpg\") center no-repeat, url(\"/build/image/fail.jpg\") center no-repeat, url(\"/build/image/success.jpg\") center no-repeat, url(\"/build/image/dragon.jpg\") no-repeat; }\n\n.adventure-app {\n  background: #333;\n  height: 100vh;\n  width: 100%;\n  background: url(\"/build/image/start.jpg\") center no-repeat;\n  background-size: cover;\n  display: flex;\n  flex-flow: row nowrap;\n  color: #fff; }\n  .adventure-app .sidebar {\n    background: url(\"/build/image/campfire.jpg\") center no-repeat;\n    background-size: cover;\n    flex: 1 0 10%; }\n    .adventure-app .sidebar h1 {\n      font-size: 3rem;\n      transform: rotate(270deg);\n      white-space: nowrap;\n      width: 150px;\n      position: relative;\n      top: 200px;\n      right: 10px;\n      letter-spacing: 8px;\n      text-shadow: 3px 3px 3px #000;\n      animation: spacein 2s; }\n\n@keyframes spacein {\n  from {\n    letter-spacing: 80px; }\n  to {\n    letter-spacing: 8px; } }\n    .adventure-app .sidebar i {\n      font-size: 3em;\n      position: relative;\n      top: 270px;\n      left: 40px;\n      text-shadow: 3px 3px 3px #000; }\n  .adventure-app .content {\n    flex: 1 0 89%;\n    align-self: center;\n    display: flex;\n    flex-flow: row nowrap;\n    justify-content: center;\n    -webkit-animation: fadein 1s;\n    /* Safari, Chrome and Opera > 12.1 */\n    -moz-animation: fadein 1s;\n    /* Firefox < 16 */\n    -ms-animation: fadein 1s;\n    /* Internet Explorer */\n    -o-animation: fadein 1s;\n    /* Opera < 12.1 */\n    animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  .adventure-app .content from {\n    opacity: 0; }\n  .adventure-app .content to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.timer {\n  flex: 1 0 89%;\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: center;\n  background-color: #000;\n  border: 1px solid #fff;\n  border-radius: 6px;\n  position: absolute;\n  top: 15px;\n  right: 0px;\n  font-size: 40px;\n  width: 100px;\n  height: 48px;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s;\n  -webkit-animation: slide 0.7s forwards;\n  -webkit-animation-delay: 0.4s;\n  animation: slide 0.7s forwards;\n  animation-delay: 0.4s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  .timer from {\n    opacity: 0; }\n  .timer to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@keyframes slide {\n  100% {\n    transform: translateX(-80px); } }\n\n@-moz-keyframes fadein {\n  100% {\n    transform: translateX(-80px); } }\n\n@-webkit-keyframes slide {\n  100% {\n    transform: translateX(-80px); } }\n\n@-ms-keyframes fadein {\n  .timer 100% {\n    transform: translateX(-80px); } }\n\n@-o-keyframes fadein {\n  100% {\n    transform: translateX(-80px); } }\n\n.begin-story {\n  background-size: cover;\n  flex: 1 0 89%;\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: center;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  .begin-story from {\n    opacity: 0; }\n  .begin-story to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n  .begin-story .question {\n    padding: 25px;\n    height: 300px;\n    width: 300px;\n    border-radius: 3px;\n    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(\"/build/image/parchment-bg.jpg\") no-repeat;\n    background-size: 100% 100%;\n    font-size: 1.5em;\n    -webkit-animation: fadein 1s;\n    /* Safari, Chrome and Opera > 12.1 */\n    -moz-animation: fadein 1s;\n    /* Firefox < 16 */\n    -ms-animation: fadein 1s;\n    /* Internet Explorer */\n    -o-animation: fadein 1s;\n    /* Opera < 12.1 */\n    animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  .begin-story .question from {\n    opacity: 0; }\n  .begin-story .question to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n  .begin-story input {\n    font-family: 'Niconne',cursive;\n    background: none;\n    border: none;\n    border-bottom: 2px solid #fff;\n    text-align: center;\n    width: 100%;\n    font-size: 1.3em;\n    color: #fff;\n    text-transform: capitalize; }\n  .begin-story h3 {\n    margin-bottom: 15px; }\n\n.question-bg {\n  padding: 25px 0;\n  width: 100%;\n  display: flex;\n  justify-content: center;\n  box-shadow: 0px 0px 8px #000; }\n\n#bg1 {\n  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/build/image/begin.jpg\") no-repeat center;\n  background-size: cover;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  #bg1 from {\n    opacity: 0; }\n  #bg1 to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n#bg2 {\n  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(\"/build/image/travel2.jpg\") no-repeat center;\n  background-size: cover;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  #bg2 from {\n    opacity: 0; }\n  #bg2 to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n#bg3 {\n  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(\"/build/image/travel.jpg\") no-repeat center;\n  background-size: cover;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  #bg3 from {\n    opacity: 0; }\n  #bg3 to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n#bg4 {\n  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(\"/build/image/dragon.jpg\") no-repeat center;\n  background-size: cover;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  #bg4 from {\n    opacity: 0; }\n  #bg4 to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.fail-page {\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: center;\n  width: 100%;\n  height: 100vh;\n  text-align: center;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s;\n  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/build/image/fail.jpg\") no-repeat;\n  background-size: cover; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  .fail-page from {\n    opacity: 0; }\n  .fail-page to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n  .fail-page div {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center; }\n  .fail-page h1 {\n    font-size: 3em;\n    margin-bottom: 10px; }\n  .fail-page p {\n    font-size: 1.3em; }\n\n.success-page {\n  display: flex;\n  flex-flow: column nowrap;\n  justify-content: center;\n  width: 100%;\n  height: 100vh;\n  -webkit-animation: fadein 1s;\n  /* Safari, Chrome and Opera > 12.1 */\n  -moz-animation: fadein 1s;\n  /* Firefox < 16 */\n  -ms-animation: fadein 1s;\n  /* Internet Explorer */\n  -o-animation: fadein 1s;\n  /* Opera < 12.1 */\n  animation: fadein 1s;\n  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/build/image/success.jpg\") no-repeat;\n  background-size: cover; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-moz-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-webkit-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@-ms-keyframes fadein {\n  .success-page from {\n    opacity: 0; }\n  .success-page to {\n    opacity: 1; } }\n\n@-o-keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n  .success-page h1 {\n    font-size: 3em;\n    align-self: center; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 170 */
+/* 176 */
 /***/ function(module, exports) {
 
 	/*
@@ -20457,7 +20918,7 @@
 
 
 /***/ },
-/* 171 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

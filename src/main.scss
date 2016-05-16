@@ -3,11 +3,11 @@
 
 //fade in effectx
 @mixin fade-in(){
-	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 1s; /* Firefox < 16 */
-        -ms-animation: fadein 1s; /* Internet Explorer */
-         -o-animation: fadein 1s; /* Opera < 12.1 */
-            animation: fadein 1s;
+	-webkit-animation: fadein 1.5s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 1.5s; /* Firefox < 16 */
+        -ms-animation: fadein 1.5s; /* Internet Explorer */
+         -o-animation: fadein 1.5s; /* Opera < 12.1 */
+            animation: fadein 1.5s;
 
 	@keyframes fadein {
 	    from { opacity: 0; }
@@ -91,15 +91,25 @@ button{
 			white-space:nowrap;
 			width:150px;
 			position:relative;
-			top:150px;
-			letter-spacing:3px;
+			top:200px;
+			right:10px;
+			text-shadow:3px 3px 3px #000;
 			
+			letter-spacing:8px;
 			animation: spacein 2s;
 
 			@keyframes spacein {
 			    from { letter-spacing: 80px; }
-			    to   { letter-spacing: 3px; }
+			    to   { letter-spacing: 8px; }
 			}
+		}
+
+		i{
+			font-size: 3em;
+			position:relative;
+			top:270px;
+			left:40px;
+			text-shadow:3px 3px 3px #000;
 		}
 	}
 
@@ -171,6 +181,7 @@ button{
 		padding:25px;
 		height:300px;
 		width:300px;
+		border-radius:3px;
 		background:
 			linear-gradient( 
 				rgba(0,0,0,0.3),
