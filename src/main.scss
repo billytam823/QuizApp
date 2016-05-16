@@ -314,6 +314,44 @@ button{
 		h1{
 			font-size:3em;
 			align-self:center;
+			margin-bottom:20px;
 		}
+		
+		i{	
+			opacity: 0;
+			text-align:center;
+			position:relative;
+			font-size:14em;
+			-webkit-animation: fadeout 1.5s; /* Safari, Chrome and Opera > 12.1 */
+		       -moz-animation: fadeout 1.5s; /* Firefox < 16 */
+		        -ms-animation: fadeout 1.5s; /* Internet Explorer */
+		         -o-animation: fadeout 1.5s; /* Opera < 12.1 */
+		            animation: fadeout 1.5s;
 
+			@keyframes fadeout {
+			    from { opacity: 1; font-size:8em; }
+			    to   { opacity: 0; font-size:14em;}
+			}
+
+			@-moz-keyframes fadeout {
+			    from { opacity: 1; font-size:8em; }
+			    to   { opacity: 0; font-size:14em;}
+			}
+
+			@-webkit-keyframes fadeout {
+			    from { opacity: 1; font-size:8em; }
+			    to   { opacity: 0; font-size:14em;}
+			}
+
+			@-ms-keyframes fadeout {
+			    from { opacity: 1; font-size:8em; }
+			    to   { opacity: 0; font-size:14em;}
+			}
+
+			@-o-keyframes fadeout {
+			    from { opacity: 1; font-size:8em; }
+			    to   { opacity: 0; font-size:14em;}
+			}
+						
+		}
 }
