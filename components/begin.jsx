@@ -32,7 +32,7 @@ export default class Begin extends React.Component{
 	 	e.preventDefault();
 
 	 	//Compares the input answer with array's "answer" 
-	 	if(this.refs.reply.value === this.state.adventure[this.state.questionNum].answer){
+	 	if(this.refs.reply.value.toLowerCase() === this.state.adventure[this.state.questionNum].answer){
 	
 	 		// Assign newAdventure as the array to be modified
 			const newAdventure = this.state.adventure.map((adventure)=>{
@@ -90,7 +90,7 @@ export default class Begin extends React.Component{
 						<Timer setpage={this._nextFail.bind(this)} />
 						<h3>{this.state.adventure[this.state.questionNum].quest}</h3>
 						<form onSubmit={this._submit.bind(this)} >
-							<input type="text" ref="reply" autofocus/>
+							<input type="text" ref="reply"/>
 						</form>
 					</div>
 				</div> : '' }

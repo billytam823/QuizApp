@@ -12,7 +12,7 @@ export default class Start extends React.Component{
 		return(
 			<div>
 				<div className="preload"></div>
-				<button onClick={this._nextPage.bind(this)}>An Adventre Awaits...</button>
+				<button onKeyDown={this._nextPage.bind(this)} onClick={this._nextPage.bind(this)}>An Adventre Awaits...</button>
 			</div>
 		)
 	}
